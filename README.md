@@ -34,7 +34,7 @@ I completed the first three tasks, i.e. studied centrality, and calculated InDeg
 
 * **Debugging** - Debugging distributed applications is difficult. Finding out how the MapReduce framework works like Unix pipes helped isolate where things were going wrong.
 * **Data Formatting** - In order to calculate the PageRank for the dataset, I needed to change its format. I was able to do this using a simple IdentityMapper + AppendReducer to quickly reformat the dataset into an adjacency matrix from an adjacency list.
-* **Sorting and Shuffling** The PageRank algorithm requires repetition until convergence, i.e. that certain steps be repeated until the output is stable. As far as I'm aware, it only does this for transfers from Mappers to Reducers, which means I can't just feed the output of one reducer into another.
+* **Sorting and Shuffling** - The PageRank algorithm requires repetition until convergence, i.e. that certain steps be repeated until the output is stable. As far as I'm aware, it only does this for transfers from Mappers to Reducers, which means I can't just feed the output of one reducer into another.
 
 ## Key Items
 The relevant files are listed in `src/mappers` and `src/reducers`.
