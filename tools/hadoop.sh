@@ -9,7 +9,6 @@ mapper=$1           # Path to the mapper binary
 reducer=$2          # Path to the reducer binary
 output="output/$3"  # If 3 is empty, then the output folder is used
 input="data/$4"     # Look for files in the data folder
-iterations=${5-1}   # Use iterations argument if provided, else 1
 combiner=$6         # Optional combiner
 
 if [ ! -f "$mapper" ]; then
@@ -45,19 +44,8 @@ if [ ! -d "$HADOOP_HOME" ]; then
     exit 1;
 fi
 
-if [ -f "$combiner" ]; then
 "$HADOOP_HOME/bin/hadoop" jar ./tools/streaming.jar \
     -input $input \
     -output $output \
     -mapper $mapper \
-    -reducer $reducer \
-    -numReduceTasks $iterations \
-    -combiner $combiner
-else
-"$HADOOP_HOME/bin/hadoop" jar ./tools/streaming.jar \
-    -input $input \
-    -output $output \
-    -mapper $mapper \
-    -reducer $reducer \
-    -numReduceTasks $iterations
-fi
+    -reducer $reducer
