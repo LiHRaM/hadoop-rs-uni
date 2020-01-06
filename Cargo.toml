@@ -1,0 +1,37 @@
+[package]
+name = "hadoop-rs"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+efflux = "2.0"
+
+[[bin]]
+doc = false
+name = "append-reducer"
+path = "src/bin/append-reducer.rs"
+
+[[bin]]
+doc = false
+name = "degree-centrality-mapper"
+path = "src/bin/degree-centrality-mapper.rs"
+
+[[bin]]
+doc = false
+name = "degree-centrality-reducer"
+path = "src/bin/degree-centrality-reducer.rs"
+
+[[bin]]
+doc = false
+name = "identity-mapper"
+path = "src/bin/identity-mapper.rs"
+
+[[bin]]
+doc = false
+name = "pagerank-mapper"
+path = "src/bin/pagerank-mapper.rs"
+
+[[bin]]
+doc = false
+name = "pagerank-reducer"
+path = "src/bin/pagerank-reducer.rs"
