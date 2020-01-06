@@ -20,7 +20,7 @@ impl Mapper for PageRankMapper {
 
         // Calculate the initial page rank and set values for the out nodes
         let page_rank = 1.0 / nodes.len() as f64;
-        let page_rank = format!("Δ{:.10}", page_rank);
+        let page_rank = format!("Δ{:.16}", page_rank);
         for node in &nodes {
             ctx.write_fmt(node, &page_rank);
         }

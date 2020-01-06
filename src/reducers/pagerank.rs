@@ -26,11 +26,14 @@ impl Reducer for PageRankReducer {
             }
         }
 
+        // Compute ΔPageRank for each outgoing node and output to the stage
         let page_rank = page_rank / out_nodes.len() as f64;
         for node in &out_nodes {
-            let page_rank = format!("Δ{:.10}", page_rank);
+            let page_rank = format!("Δ{:.16}", page_rank);
             ctx.write_fmt(node, page_rank);
         }
+
+        // Output the total pagerank for this node as well as outgoing nodes
         if out_nodes.len() > 0 {
             ctx.write(key, out_nodes.join(",").as_bytes());
         }
