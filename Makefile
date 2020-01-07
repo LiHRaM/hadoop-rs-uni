@@ -2,8 +2,6 @@
 
 CMD=./tools/hadoop.sh
 BINS=./target/release
-SMALL=edges-papers.txt
-LARGE=edges-patents.txt
 
 pagerank:
 	./tools/pagerank.sh
@@ -22,10 +20,10 @@ pagerank-first:
 	mv -f output/pagerank-intermediate output/pagerank-intermediate-last
 
 pagerank-preprocess: build
-	${CMD} "${BINS}/identity-mapper" "${BINS}/append-reducer" pagerank-preprocess test-list.txt
+	${CMD} "${BINS}/identity-mapper" "${BINS}/append-reducer" pagerank-preprocess ${FILE}
 
 degree-centrality: build
-	${CMD} "${BINS}/degree-centrality-mapper" "${BINS}/degree-centrality-reducer" degree-centrality test-list.txt
+	${CMD} "${BINS}/degree-centrality-mapper" "${BINS}/degree-centrality-reducer" degree-centrality ${FILE}
 
 build: format
 	cargo build --release
