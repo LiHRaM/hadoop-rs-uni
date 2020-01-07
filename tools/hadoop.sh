@@ -50,11 +50,11 @@ if [ -d "$combiner" ]; then
         -output $output \
         -mapper $mapper \
         -reducer $reducer \
-        -combiner $combiner
+        -combiner $combiner >> output/make.log 2>> output/make.log
 else
     "$HADOOP_HOME/bin/hadoop" jar ./tools/streaming.jar \
         -input $input \
         -output $output \
         -mapper $mapper \
-        -reducer $reducer
+        -reducer $reducer >> output/make.log 2>> output/make.log
 fi

@@ -10,13 +10,13 @@ pagerank-sum: build
 
 pagerank-intermediate: build
 	${CMD} "${BINS}/identity-mapper" "${BINS}/pagerank-reducer" pagerank-intermediate ../output/pagerank-intermediate-last/part-* "${BINS}/pagerank-combiner"
-	rm -r output/pagerank-intermediate-last
-	mv output/pagerank-intermediate output/pagerank-intermediate-last
+	if [ -d output/pagerank-intermediate-last ]; then rm -r output/pagerank-intermediate-last; fi;
+	mv -f output/pagerank-intermediate output/pagerank-intermediate-last
 
 pagerank-first: build
 	${CMD} "${BINS}/pagerank-mapper" "${BINS}/pagerank-reducer" pagerank-intermediate ../output/pagerank-preprocess/part-* "${BINS}/pagerank-combiner"
-	rm -r output/pagerank-intermediate-last
-	mv output/pagerank-intermediate output/pagerank-intermediate-last
+	if [ -d output/pagerank-intermediate-last ]; then rm -r output/pagerank-intermediate-last; fi;
+	mv -f output/pagerank-intermediate output/pagerank-intermediate-last
 
 pagerank-preprocess: build
 	${CMD} "${BINS}/identity-mapper" "${BINS}/append-reducer" pagerank-preprocess test-list.txt
