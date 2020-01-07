@@ -9,7 +9,7 @@ mapper=$1           # Path to the mapper binary
 reducer=$2          # Path to the reducer binary
 output="output/$3"  # If 3 is empty, then the output folder is used
 input="data/$4"     # Look for files in the data folder
-combiner=$6         # Optional combiner
+combiner=$5         # Optional combiner
 
 if [ ! -f "$mapper" ]; then
     echo "Mapper missing";
@@ -30,10 +30,10 @@ if [ ! -f ./tools/streaming.jar ]; then
     exit 1;
 fi
 
-if [ ! -f "$input" ]; then
-    echo "File $input not found!";
-    exit 1;
-fi
+# if [ ! -f "$input" ]; then
+#     echo "File $input not found!";
+#     exit 1;
+# fi
 
 if [ -d "$output" ]; then
     rm -r "$output";
@@ -44,8 +44,17 @@ if [ ! -d "$HADOOP_HOME" ]; then
     exit 1;
 fi
 
-"$HADOOP_HOME/bin/hadoop" jar ./tools/streaming.jar \
-    -input $input \
-    -output $output \
-    -mapper $mapper \
-    -reducer $reducer
+if [ -d "$combiner" ]; then
+    "$HADOOP_HOME/bin/hadoop" jar ./tools/streaming.jar \
+        -input $input \
+        -output $output \
+        -mapper $mapper \
+        -reducer $reducer \
+        -combiner $combiner
+else
+    "$HADOOP_HOME/bin/hadoop" jar ./tools/streaming.jar \
+        -input $input \
+        -output $output \
+        -mapper $mapper \
+        -reducer $reducer
+fi

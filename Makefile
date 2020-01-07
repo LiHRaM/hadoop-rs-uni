@@ -5,8 +5,18 @@ BINS=./target/release
 SMALL=edges-papers.txt
 LARGE=edges-patents.txt
 
-pagerank: build
-	${CMD} "${BINS}/pagerank-mapper" "${BINS}/pagerank-reducer" pagerank test-matrix.txt
+pagerank-sum: build
+	${CMD} "${BINS}/identity-mapper" "${BINS}/pagerank-combiner" pagerank-sum ../output/pagerank-intermediate-last/part-* "${BINS}/pagerank-combiner"
+
+pagerank-intermediate: build
+	${CMD} "${BINS}/identity-mapper" "${BINS}/pagerank-reducer" pagerank-intermediate ../output/pagerank-intermediate-last/part-* "${BINS}/pagerank-combiner"
+	rm -r output/pagerank-intermediate-last
+	mv output/pagerank-intermediate output/pagerank-intermediate-last
+
+pagerank-first: build
+	${CMD} "${BINS}/pagerank-mapper" "${BINS}/pagerank-reducer" pagerank-intermediate ../output/pagerank-preprocess/part-* "${BINS}/pagerank-combiner"
+	rm -r output/pagerank-intermediate-last
+	mv output/pagerank-intermediate output/pagerank-intermediate-last
 
 pagerank-preprocess: build
 	${CMD} "${BINS}/identity-mapper" "${BINS}/append-reducer" pagerank-preprocess test-list.txt
