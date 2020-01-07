@@ -1,9 +1,8 @@
 use efflux::prelude::*;
 
-/// The struct which will implement the `Mapper` trait.
 pub struct DegreeCentralityMapper;
 
-/// An empty implementation of the `Mapper` trait.
+/// This is basically WordCount but for in degrees
 impl Mapper for DegreeCentralityMapper {
     fn map(&mut self, _key: usize, value: &[u8], ctx: &mut Context) {
         // skip empty
@@ -22,11 +21,8 @@ impl Mapper for DegreeCentralityMapper {
             return;
         }
 
-        // split on newlines to find pairs
-        for pair in value.split("\n") {
-            let mut pair = pair.split("\t");
-            let to = pair.next().expect("Failed to read to");
-            ctx.write_fmt(to, 1); // One indegree
-        }
+        let mut pair = value.split("\t");
+        let to = pair.next().expect("Failed to read to");
+        ctx.write_fmt(to, 1); // Count one in degree
     }
 }
